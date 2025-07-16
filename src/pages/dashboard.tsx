@@ -10,7 +10,6 @@ import {
     ChartBarSquareIcon,
     Cog6ToothIcon,
     QuestionMarkCircleIcon,
-    PowerIcon,
     HomeIcon
 } from "@heroicons/react/24/outline";
 import { Dialog } from "@headlessui/react";
@@ -68,7 +67,7 @@ const Dashboard = () => {
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <MusicalNoteIcon className="w-5 h-5" />
-                        Asset Library
+                        <Link to="/AssetLibrary">Asset Library</Link>
                     </li>
 
                     {/* Analytics */}
@@ -151,23 +150,19 @@ const Dashboard = () => {
                                 </li>
                                 <li className="hover:text-pink-400 cursor-pointer py-4 px-1 flex items-center gap-3">
                                     <MusicalNoteIcon className="w-5 h-5" />
-                                    Asset Library
+                                    <Link to="/assetLibrary">Asset Library</Link>
                                 </li>
                                 <li className="hover:text-pink-400 cursor-pointer py-4 px-1 flex items-center gap-3">
                                     <ChartBarSquareIcon className="w-5 h-5" />
-                                    Analytics
+                                    <Link to="/analytics">Analytics</Link>
                                 </li>
                                 <li className="hover:text-pink-400 cursor-pointer py-4 px-1 flex items-center gap-3">
                                     <Cog6ToothIcon className="w-5 h-5" />
-                                    Settings
+                                    <Link to="/settings">Settings</Link>
                                 </li>
                                 <li className="hover:text-pink-400 cursor-pointer py-4 px-1 flex items-center gap-3">
                                     <QuestionMarkCircleIcon className="w-5 h-5" />
-                                    FAQs
-                                </li>
-                                <li className="hover:text-pink-400 cursor-pointer py-4 px-1 flex items-center gap-3">
-                                    <PowerIcon className="w-5 h-5" />
-                                    Logout
+                                    <Link to="/faqs">FAQs</Link>
                                 </li>
                             </div>
                         </ul>

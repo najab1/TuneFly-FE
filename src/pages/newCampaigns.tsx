@@ -10,9 +10,11 @@ import {
 } from "@heroicons/react/24/outline";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NewCampaigns = () => {
     const location = useLocation();
+    const navigate = useNavigate();
 
     return (
         <div
@@ -108,7 +110,7 @@ const NewCampaigns = () => {
                 <div className="relative mb-6 md:hidden">
                     {/* Back Arrow on the left */}
                     <button className="absolute left-0 top-1/2 -translate-y-1/2">
-                        <ArrowLeftCircleIcon className="w-8 h-8 text-white" />
+                        <ArrowLeftCircleIcon className="w-8 h-8 text-gray-400" onClick={() => navigate(-1)} />
                     </button>
 
                     {/* Centered Heading */}
@@ -157,6 +159,12 @@ const NewCampaigns = () => {
                         <p className="text-base text-white mb-6">
                             You don’t have any campaigns right now
                         </p>
+<img
+  src="/Illustration/NewIlls.svg"
+  alt="Campaign Illustration"
+  className="w-full max-w-[300px] mx-auto mt-6"
+/>
+
                         <button
                             className="
             bg-gradient-to-r from-pink-500 to-teal-400
