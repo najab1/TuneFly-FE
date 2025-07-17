@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
     BellIcon,
     SpeakerWaveIcon,
@@ -11,16 +11,26 @@ import {
     ChevronRightIcon,
     UserIcon,
     LockClosedIcon,
-    TrashIcon
+    TrashIcon,
+    ChevronDownIcon,
+    ChevronUpIcon,
+    EyeIcon,
+    EyeSlashIcon,
 } from "@heroicons/react/24/outline";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import countryList from 'react-select-country-list';
 
 const Settings = () => {
     const location = useLocation();
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [selectedCountry, setSelectedCountry] = useState('');
+    const countryOptions = useMemo(() => countryList().getData(), []);
+    const [countryOpen, setCountryOpen] = useState(false);
+    const [showCurrent, setShowCurrent] = useState(false);
+    const [showNew, setShowNew] = useState(false);
     const navigate = useNavigate();
 
     // Clickable routes
@@ -50,111 +60,108 @@ const Settings = () => {
       "
         >
             {/* Sidebar (Desktop Only) */}
+{/* Sidebar (Desktop Only) */}
             <aside className="hidden md:flex flex-col w-64 bg-[#111111] p-6 space-y-6">
-                <img
-                    src="/assets/logo.svg"
-                    alt="Tunefly Logo"
-                    className="w-20 lg:w-24 items-center justify-center mx-auto mb-4"
-                />
+                <img src="/assets/logo.svg" alt="Tunefly Logo" className="w-20 lg:w-24 items-center justify-center mx-auto mb-4" />
                 <ul className="text-white text-base font-medium space-y-4">
                     {/* Home */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-              ${location.pathname === "/dashboard"
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                            }`}
+    ${location.pathname === '/dashboard' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === "/dashboard" && (
+                        {location.pathname === '/dashboard' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-9 w-2 bg-teal-400 rounded-r"></span>
                         )}
                         <HomeIcon className="w-5 h-5" />
-                        Home
+                        <Link to="/dashboard">Home</Link>
                     </li>
 
                     {/* New Campaigns */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-              ${location.pathname === "/campaigns"
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                            }`}
+    ${location.pathname === '/campaigns' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === "/campaigns" && (
+                        {location.pathname === '/campaigns' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <SpeakerWaveIcon className="w-5 h-5" />
-                        New Campaigns
+                        <Link to="/newCampaigns">New Campaigns</Link>
                     </li>
 
                     {/* Asset Library */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-              ${location.pathname === "/library"
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                            }`}
+    ${location.pathname === '/library' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === "/library" && (
+                        {location.pathname === '/library' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <MusicalNoteIcon className="w-5 h-5" />
-                        Asset Library
+                        <Link to="/AssetLibrary">Asset Library</Link>
                     </li>
 
                     {/* Analytics */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-              ${location.pathname === "/analytics"
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                            }`}
+    ${location.pathname === '/analytics' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === "/analytics" && (
+                        {location.pathname === '/analytics' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <ChartBarSquareIcon className="w-5 h-5" />
-                        Analytics
+                        <Link to="/analytics">Analytics</Link>
                     </li>
 
                     {/* Settings */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-              ${location.pathname === "/settings"
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                            }`}
+    ${location.pathname === '/settings' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === "/settings" && (
+                        {location.pathname === '/settings' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <Cog6ToothIcon className="w-5 h-5" />
-                        Settings
+                        <Link to="/settings">Settings</Link>
                     </li>
 
                     {/* FAQs */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-              ${location.pathname === "/faqs"
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                            }`}
+    ${location.pathname === '/faqs' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === "/faqs" && (
+                        {location.pathname === '/faqs' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <QuestionMarkCircleIcon className="w-5 h-5" />
-                        FAQs
+                        <Link to="/faqs">FAQs</Link>
                     </li>
                 </ul>
+
             </aside>
 
             {/* Main Content */}
             <div className="flex-1 py-6 md:px-10 xl:px-14 2xl:px-20">
+
+                {/* Desktop Header (optional) */}
+                <div className="hidden md:block mb-6 mt-4">
+                    <div className="flex items-center justify-between">
+                        <h1 className="text-2xl font-semibold text-white">Settings</h1>
+                        <div className="flex items-center gap-5">
+                            <BellIcon className="w-6 h-6 text-white" />
+                            <img
+                                src="/profile/Profile.png"
+                                alt="Profile"
+                                className="w-12 h-12 rounded-full object-cover"
+                            />
+                        </div>
+                    </div>
+                    <div className="mt-8 mb-12 w-full h-[1px] bg-gray-200/40" />
+                </div>
+
                 {/* Mobile Header */}
                 <div className="relative mb-6 md:hidden flex items-center justify-between px-4">
                     <button>
-                        <ArrowLeftCircleIcon className="w-8 h-8 text-gray-400" onClick={() => navigate(-1)}/>
+                        <ArrowLeftCircleIcon className="w-8 h-8 text-gray-400" onClick={() => navigate(-1)} />
                     </button>
                     <h1 className="text-[1.35rem] font-semibold text-white">Settings</h1>
                     <button
@@ -166,7 +173,7 @@ const Settings = () => {
                 </div>
 
                 {/* Settings Content */}
-                <div className="px-4 md:px-0 flex flex-col items-center text-center">
+                <div className="px-4 md:px-0 flex flex-col items-center text-center lg:hidden">
                     {/* Profile Image with Gradient Border */}
                     <div className="rounded-full w-24 h-24 mb-6">
                         <img
@@ -217,21 +224,244 @@ const Settings = () => {
                         })}
                     </div>
                 </div>
+                {/* Desktop Layout */}
+                <div className="hidden lg:flex flex-col gap-12">
 
-                {/* Desktop Header (optional) */}
-                <div className="hidden md:block mb-6 mt-4">
-                    <div className="flex items-center justify-between">
-                        <h1 className="text-2xl font-semibold text-white">Campaigns</h1>
-                        <div className="flex items-center gap-5">
-                            <BellIcon className="w-6 h-6 text-white" />
-                            <img
-                                src="/profile/Profile.png"
-                                alt="Profile"
-                                className="w-12 h-12 rounded-full object-cover"
-                            />
+                    {/* Row 1: Picture + Buttons */}
+                    <div className="flex justify-between items-start">
+                        {/* Left: Profile Picture + Label */}
+                        <div className="flex flex-col items-center gap-4">
+                            <div className="w-28 h-28 rounded-full overflow-hidden">
+                                <img
+                                    src="/profile/Profile.png"
+                                    alt="User"
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <p className="text-center text-base text-white">
+                                Profile Picture<br />
+                                <div className="text-gray-400 text-sm">PNG, JPEG under 15MB</div>
+                            </p>
+                        </div>
+
+                        {/* Right: Upload / Delete Buttons */}
+                        <div className="flex flex-col items-end gap-3 mt-12">
+                            <div className="flex gap-3">
+                                {/* Outlined gradient button */}
+                                <div className="p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
+                                    <button className="bg-[#1f1f21] text-white font-medium text-xs px-4 py-2 rounded-md">
+                                        Upload new picture
+                                    </button>
+                                </div>
+
+                                {/* Solid gradient button */}
+                                <button className="bg-gradient-to-r from-pink-500 to-teal-400 text-white font-medium text-xs px-4 py-2 rounded-md">
+                                    Delete picture
+                                </button>
+                            </div>
+
+                            <div className="w-full flex justify-center items-center">
+                                <button
+                                    onClick={() => setShowDeleteModal(true)}
+                                    className="text-xs text-red-400 underline"
+                                >
+                                    Delete account permanently
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div className="mt-8 mb-12 w-full h-[1px] bg-gray-200/40" />
+
+                    {/* Row 2: Profile Heading + Fields */}
+                    <div className="flex flex-col gap-6">
+                        <h2 className="text-2xl font-semibold">Profile</h2>
+
+                        <div className="grid grid-cols-2 gap-6">
+                            {/* Username */}
+                            <div className="flex flex-col">
+                                <label htmlFor="username" className="text-sm mb-2">Username</label>
+                                <div className="p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
+                                    <input
+                                        type="text"
+                                        id="username"
+                                        className="w-full px-4 py-3 rounded-md bg-[#1f1f21] text-white text-sm outline-none"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Email */}
+                            <div className="flex flex-col">
+                                <label htmlFor="email" className="text-sm mb-2">Email</label>
+                                <div className="p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        className="w-full px-4 py-3 rounded-md bg-[#1f1f21] text-white text-sm outline-none"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Phone Number */}
+                            <div className="flex flex-col">
+                                <label htmlFor="phone" className="text-sm mb-2">Phone Number</label>
+                                <div className="p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        className="w-full px-4 py-3 rounded-md bg-[#1f1f21] text-white text-sm outline-none"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Country */}
+                            <div className="flex flex-col">
+                                <label htmlFor="country" className="text-sm mb-2">Country</label>
+                                <div className="relative p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
+                                    <select
+                                        id="country"
+                                        value={selectedCountry}
+                                        onChange={e => setSelectedCountry(e.target.value)}
+                                        onFocus={() => setCountryOpen(true)}
+                                        onBlur={() => setCountryOpen(false)}
+                                        className="w-full px-4 py-3 rounded-md bg-[#1f1f21] text-white text-sm outline-none appearance-none pr-8"
+                                    >
+                                        <option value="" disabled>Choose your country</option>
+                                        {countryOptions.map(c => (
+                                            <option key={c.value} value={c.value}>
+                                                {c.label}
+                                            </option>
+                                        ))}
+                                    </select>
+
+                                    {/* chevron */}
+                                    <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                                        {countryOpen
+                                            ? <ChevronUpIcon className="w-4 h-4 text-gray-400" />
+                                            : <ChevronDownIcon className="w-4 h-4 text-gray-400" />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-2 w-full h-[1px] bg-gray-200/40" />
+                    </div>
+                    {/* …then your Password & Integrated Accounts sections as before… */}
+                    <div className="">
+                        <h2 className="text-2xl font-semibold">Password</h2>
+                        <div className="text-xs text-gray-400 mt-2 mb-8">Modify your current password</div>
+
+                        <div className="grid grid-cols-2 gap-6">
+                            <div className="flex flex-col">
+                                <label htmlFor="currentPassword" className="text-sm mb-2">Current Password</label>
+                                <div className="relative p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
+                                    <input
+                                        type={showCurrent ? "text" : "password"}
+                                        id="currentPassword"
+                                        className="w-full px-4 py-3 rounded-md bg-[#1f1f21] text-white text-sm outline-none"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowCurrent(o => !o)}
+                                        className="absolute inset-y-0 right-3 flex items-center text-gray-400"
+                                        aria-label={showCurrent ? "Hide password" : "Show password"}
+                                    >
+                                        {showCurrent
+                                            ? <EyeSlashIcon className="w-5 h-5" />
+                                            : <EyeIcon className="w-5 h-5" />
+                                        }
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* New Password */}
+                            <div className="flex flex-col">
+                                <label htmlFor="newPassword" className="text-sm mb-2">New Password</label>
+                                <div className="relative p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
+                                    <input
+                                        type={showNew ? "text" : "password"}
+                                        id="newPassword"
+                                        className="w-full px-4 py-3 rounded-md bg-[#1f1f21] text-white text-sm outline-none"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowNew(o => !o)}
+                                        className="absolute inset-y-0 right-3 flex items-center text-gray-400"
+                                        aria-label={showNew ? "Hide password" : "Show password"}
+                                    >
+                                        {showNew
+                                            ? <EyeSlashIcon className="w-5 h-5" />
+                                            : <EyeIcon className="w-5 h-5" />
+                                        }
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-8 w-full h-[1px] bg-gray-200/40" />
+                    </div>
+
+                    {/* Row 4: Integrated Accounts */}
+                    <div className="flex flex-col">
+                        <h2 className="text-2xl font-semibold">Integrated Accounts</h2>
+                        <div className="text-xs text-gray-400 mt-2 mb-8">Manage your current integrated accounts</div>
+
+                        <div className="grid grid-cols-2 xl:grid-cols-3 gap-6">
+                            {/* Spotify */}
+                            <div className="p-[1px] rounded-lg bg-gradient-to-r from-pink-500 to-teal-400">
+                                <div className="flex items-center justify-between px-4 py-3 bg-[#1f1f21] rounded-lg">
+                                    <div className="flex items-center gap-3">
+                                        <img
+                                            src="/assets/Spotify_icon.svg"
+                                            alt="Spotify"
+                                            className="w-14 h-14"
+                                        />
+                                        <span>Spotify</span>
+                                    </div>
+                                    {/* Gradient‑border “Connected” pill */}
+                                    <div className="p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
+                                        <span className="block bg-[#1f1f21] text-xs text-white px-3 py-1 rounded-md">
+                                            Connected
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Apple Music */}
+                            <div className="p-[1px] rounded-lg bg-gradient-to-r from-pink-500 to-teal-400">
+                                <div className="flex items-center justify-between px-4 py-3 bg-[#1f1f21] rounded-lg">
+                                    <div className="flex items-center gap-3">
+                                        <img
+                                            src="/assets/AMusic_icon.svg"
+                                            alt="Apple Music"
+                                            className="w-14 h-14"
+                                        />
+                                        <span>Apple Music</span>
+                                    </div>
+
+                                    {/* Gradient‑border “Connected” pill */}
+                                    <div className="p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
+                                        <span className="block bg-[#1f1f21] text-xs text-white px-3 py-1 rounded-md">
+                                            Connected
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Paste your link */}
+                            <div className="p-[1px] rounded-lg bg-gradient-to-r from-pink-500 to-teal-400">
+                                <div className="flex items-center justify-between px-4 py-3 bg-[#1f1f21] rounded-lg">
+                                    <div className="flex items-center gap-3">
+                                        <img src="/assets/Clip.svg" alt="Link" className="w-14 h-14" />
+                                        <span>Paste your link</span>
+                                    </div>
+                                    {/* Gradient‑border “Connected” pill */}
+                                    <div className="p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
+                                        <span className="block bg-[#1f1f21] text-xs text-white px-3 py-1 rounded-md">
+                                            Connected
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -317,7 +547,7 @@ const Settings = () => {
                                     }}
                                     className="w-full py-3 text-sm font-semibold text-white"
                                 >
-                                    Logout 
+                                    Logout
                                 </button>
 
                                 <div className="h-px bg-gray-600 w-full"></div>

@@ -7,7 +7,7 @@ function Signup() {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <div className="relative min-h-screen flex items-center justify-center pt-20 pb-14 lg:pt-0 lg:pb-0">
+        <div className="relative min-h-screen flex items-center justify-center pt-10 pb-10 lg:pt-0 lg:pb-0">
             {/* Background image */}
             <div
                 className="absolute inset-0 bg-cover bg-center z-10"

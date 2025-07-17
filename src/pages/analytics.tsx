@@ -7,9 +7,11 @@ import {
     QuestionMarkCircleIcon,
     HomeIcon,
     ArrowLeftCircleIcon,
+    ArrowDownTrayIcon
 } from "@heroicons/react/24/outline";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Analytics = () => {
     const location = useLocation();
@@ -22,118 +24,127 @@ const Analytics = () => {
         bg-[url('/background/DashM.png')] md:bg-[url('/background/bg.png')]
       "
         >
-            {/* Sidebar (Desktop Only) */}
+{/* Sidebar (Desktop Only) */}
             <aside className="hidden md:flex flex-col w-64 bg-[#111111] p-6 space-y-6">
-                <img
-                    src="/assets/logo.svg"
-                    alt="Tunefly Logo"
-                    className="w-20 lg:w-24 items-center justify-center mx-auto mb-4"
-                />
+                <img src="/assets/logo.svg" alt="Tunefly Logo" className="w-20 lg:w-24 items-center justify-center mx-auto mb-4" />
                 <ul className="text-white text-base font-medium space-y-4">
                     {/* Home */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-              ${location.pathname === "/dashboard"
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                            }`}
+    ${location.pathname === '/dashboard' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === "/dashboard" && (
+                        {location.pathname === '/dashboard' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-9 w-2 bg-teal-400 rounded-r"></span>
                         )}
                         <HomeIcon className="w-5 h-5" />
-                        Home
+                        <Link to="/dashboard">Home</Link>
                     </li>
 
                     {/* New Campaigns */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-              ${location.pathname === "/campaigns"
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                            }`}
+    ${location.pathname === '/campaigns' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === "/campaigns" && (
+                        {location.pathname === '/campaigns' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <SpeakerWaveIcon className="w-5 h-5" />
-                        New Campaigns
+                        <Link to="/newCampaigns">New Campaigns</Link>
                     </li>
 
                     {/* Asset Library */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-              ${location.pathname === "/library"
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                            }`}
+    ${location.pathname === '/library' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === "/library" && (
+                        {location.pathname === '/library' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <MusicalNoteIcon className="w-5 h-5" />
-                        Asset Library
+                        <Link to="/AssetLibrary">Asset Library</Link>
                     </li>
 
                     {/* Analytics */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-              ${location.pathname === "/analytics"
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                            }`}
+    ${location.pathname === '/analytics' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === "/analytics" && (
+                        {location.pathname === '/analytics' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <ChartBarSquareIcon className="w-5 h-5" />
-                        Analytics
+                        <Link to="/analytics">Analytics</Link>
                     </li>
 
                     {/* Settings */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-              ${location.pathname === "/settings"
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                            }`}
+    ${location.pathname === '/settings' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === "/settings" && (
+                        {location.pathname === '/settings' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <Cog6ToothIcon className="w-5 h-5" />
-                        Settings
+                        <Link to="/settings">Settings</Link>
                     </li>
 
                     {/* FAQs */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-              ${location.pathname === "/faqs"
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                            }`}
+    ${location.pathname === '/faqs' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === "/faqs" && (
+                        {location.pathname === '/faqs' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <QuestionMarkCircleIcon className="w-5 h-5" />
-                        FAQs
+                        <Link to="/faqs">FAQs</Link>
                     </li>
                 </ul>
+
             </aside>
 
             {/* Main Content */}
             <div className="flex-1 py-6 md:px-10 xl:px-14 2xl:px-20">
+
+                {/* Desktop Header (optional) */}
+                <div className="hidden md:block mb-6 mt-4">
+                    <div className="flex items-center justify-between">
+                        <h1 className="text-2xl font-semibold text-white">Analytics</h1>
+                        <div className="flex items-center gap-5">
+                            <BellIcon className="w-6 h-6 text-white" />
+                            <img
+                                src="/profile/Profile.png"
+                                alt="Profile"
+                                className="w-12 h-12 rounded-full object-cover"
+                            />
+                        </div>
+                    </div>
+                    <div className="mt-8 mb-4 w-full h-[1px] bg-gray-200/40" />
+                </div>
+
+                <div className="flex items-center justify-between mb-4 md:mb-6 lg:mb-8">
+                    {/* Left Side */}
+                    <h2 className="text-xs text-gray-400 lg:text-sm hidden md:block">
+                        View or download your analytics
+                    </h2>
+
+                    {/* Right Side */}
+                    <div className="flex items-center gap-2">
+                        <p className="text-xs text-gray-400 hidden md:block">This Month ▼</p>
+                        <ArrowDownTrayIcon className="h-4 w-4 text-gray-200 hidden md:block" />
+                    </div>
+                </div>
+
                 {/* Mobile Header */}
                 <div className="relative mb-6 md:hidden">
                     <button className="absolute left-4 top-1/2 -translate-y-1/2">
-                        <ArrowLeftCircleIcon className="w-8 h-8 text-gray-400" onClick={() => navigate(-1)}/>
+                        <ArrowLeftCircleIcon className="w-8 h-8 text-gray-400" onClick={() => navigate(-1)} />
                     </button>
                     <h1 className="text-[1.35rem] font-semibold text-white text-center">Analytics</h1>
                 </div>
 
                 {/* Analytics Cards Section */}
-                <div className="px-4 md:px-0 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="px-4 md:px-0 grid grid-cols-2 lg:grid-cols-4 gap-4">
                     {[
                         { label: "Song played", value: 15, icon: <MusicalNoteIcon className="w-6 h-6 text-pink-400" /> },
                         { label: "Song scanned", value: 6, icon: <ChartBarSquareIcon className="w-6 h-6 text-teal-400" /> },
@@ -141,9 +152,9 @@ const Analytics = () => {
                         { label: "Monthly Listeners", value: 12, icon: <Cog6ToothIcon className="w-6 h-6 text-pink-400" /> },
                     ].map((stat, idx) => (
                         <div key={idx} className="p-[1px] rounded-lg bg-gradient-to-r from-pink-500 to-teal-400">
-                            <div className="bg-[#1f1f21] rounded-lg px-4 py-5 flex flex-col justify-between space-y-3">
+                            <div className="bg-[#1f1f21] rounded-lg px-4 py-5 md:py-8 xl:py-10 flex flex-col justify-between space-y-3">
                                 <div className="flex justify-between items-center">
-                                    <p className="text-white text-sm">{stat.label}</p>
+                                    <p className="text-white text-sm lg:text-xs xl:text-base">{stat.label}</p>
                                     {stat.icon}
                                 </div>
                                 <p className="text-2xl font-semibold">{stat.value}</p>
@@ -154,9 +165,9 @@ const Analytics = () => {
 
                 {/* Location Analytics */}
                 <div className="px-4 md:px-0 mt-10">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-lg font-semibold">Location</h2>
-                        <p className="text-sm text-gray-300">This Month ▼</p>
+                    <div className="flex items-center justify-between mb-4 md:mb-6 lg:mb-8">
+                        <h2 className="text-lg md:text-2xl lg:text-3xl font-semibold">Location</h2>
+                        <p className="text-sm text-gray-300 block md:hidden">This Month ▼</p>
                     </div>
 
                     {[
@@ -170,28 +181,11 @@ const Analytics = () => {
                                 <span>{loc.name}</span>
                                 <span>{loc.value}</span>
                             </div>
-                            <div className="w-full bg-gray-800 h-2 rounded">
+                            <div className="w-full bg-gray-800 h-1 rounded">
                                 <div className="h-1 rounded bg-teal-400" style={{ width: `${(loc.value / 15) * 100}%` }}></div>
                             </div>
                         </div>
                     ))}
-                </div>
-
-
-                {/* Desktop Header (optional) */}
-                <div className="hidden md:block mb-6 mt-4">
-                    <div className="flex items-center justify-between">
-                        <h1 className="text-2xl font-semibold text-white">Campaigns</h1>
-                        <div className="flex items-center gap-5">
-                            <BellIcon className="w-6 h-6 text-white" />
-                            <img
-                                src="/profile/Profile.png"
-                                alt="Profile"
-                                className="w-12 h-12 rounded-full object-cover"
-                            />
-                        </div>
-                    </div>
-                    <div className="mt-8 mb-12 w-full h-[1px] bg-gray-200/40" />
                 </div>
             </div>
         </div>

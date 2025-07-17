@@ -11,6 +11,7 @@ import EditProfile from "./pages/editProfile";
 import ChangePassword from "./pages/changePassword";
 import IntegratedAccount from "./pages/integratedAccounts";
 import Faqs from "./pages/faqs";
+import QrLanding from "./pages/qrLanding";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/changePassword" element={<ChangePassword />} />
         <Route path="/integratedAccounts" element={<IntegratedAccount />} />
         <Route path="/faqs" element={<Faqs />} />
+        <Route path="/qrlanding" element={<QrLanding />} />
       </Routes>
     </BrowserRouter>
   );

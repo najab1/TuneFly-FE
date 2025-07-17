@@ -10,7 +10,7 @@ import {
     ChartBarSquareIcon,
     Cog6ToothIcon,
     QuestionMarkCircleIcon,
-    HomeIcon
+    HomeIcon,
 } from "@heroicons/react/24/outline";
 import { Dialog } from "@headlessui/react";
 import { useLocation } from "react-router-dom";
@@ -40,10 +40,10 @@ const Dashboard = () => {
     ${location.pathname === '/dashboard' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
                         {location.pathname === '/dashboard' && (
-                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-9 w-2 bg-teal-400 rounded-r"></span>
+                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <HomeIcon className="w-5 h-5" />
-                        Home
+                        <Link to="/dashboard">Home</Link>
                     </li>
 
                     {/* New Campaigns */}
@@ -55,7 +55,7 @@ const Dashboard = () => {
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <SpeakerWaveIcon className="w-5 h-5" />
-                        <Link to="/NewCampaigns">New Campaigns</Link>
+                        <Link to="/newCampaigns">New Campaigns</Link>
                     </li>
 
                     {/* Asset Library */}
@@ -79,7 +79,7 @@ const Dashboard = () => {
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <ChartBarSquareIcon className="w-5 h-5" />
-                        Analytics
+                        <Link to="/analytics">Analytics</Link>
                     </li>
 
                     {/* Settings */}
@@ -91,7 +91,7 @@ const Dashboard = () => {
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <Cog6ToothIcon className="w-5 h-5" />
-                        Settings
+                        <Link to="/settings">Settings</Link>
                     </li>
 
                     {/* FAQs */}
@@ -103,7 +103,7 @@ const Dashboard = () => {
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <QuestionMarkCircleIcon className="w-5 h-5" />
-                        FAQs
+                        <Link to="/faqs">FAQs</Link>
                     </li>
                 </ul>
 

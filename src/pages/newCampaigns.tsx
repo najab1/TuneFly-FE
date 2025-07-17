@@ -38,7 +38,7 @@ const NewCampaigns = () => {
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-9 w-2 bg-teal-400 rounded-r"></span>
                         )}
                         <HomeIcon className="w-5 h-5" />
-                        Home
+                        <Link to="/dashboard">Home</Link>
                     </li>
 
                     {/* New Campaigns */}
@@ -46,11 +46,11 @@ const NewCampaigns = () => {
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
     ${location.pathname === '/campaigns' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === '/campaigns' && (
+                        {location.pathname === '/newCampaigns' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <SpeakerWaveIcon className="w-5 h-5" />
-                        New Campaigns
+                        <Link to="/newCampaigns">New Campaigns</Link>
                     </li>
 
                     {/* Asset Library */}
@@ -62,7 +62,7 @@ const NewCampaigns = () => {
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <MusicalNoteIcon className="w-5 h-5" />
-                        Asset Library
+                        <Link to="/AssetLibrary">Asset Library</Link>
                     </li>
 
                     {/* Analytics */}
@@ -74,7 +74,7 @@ const NewCampaigns = () => {
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <ChartBarSquareIcon className="w-5 h-5" />
-                        Analytics
+                        <Link to="/analytics">Analytics</Link>
                     </li>
 
                     {/* Settings */}
@@ -86,7 +86,7 @@ const NewCampaigns = () => {
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <Cog6ToothIcon className="w-5 h-5" />
-                        Settings
+                        <Link to="/settings">Settings</Link>
                     </li>
 
                     {/* FAQs */}
@@ -98,7 +98,7 @@ const NewCampaigns = () => {
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <QuestionMarkCircleIcon className="w-5 h-5" />
-                        FAQs
+                        <Link to="/faqs">FAQs</Link>
                     </li>
                 </ul>
 
@@ -118,7 +118,12 @@ const NewCampaigns = () => {
                 </div>
 
                 {/* Empty state content for mobile */}
-                <div className="md:hidden flex flex-col items-center justify-center h-[calc(100vh-80px)] text-center px-6">
+                <div className="md:hidden flex flex-col items-center justify-center mt-16 text-center px-6">
+                    <img
+                        src="/Illustration/NoCampaign.svg"
+                        alt="Campaign Illustration"
+                        className="h-80 w-80 mx-auto mt-6"
+                    />
                     <p className="text-base text-white mb-6">
                         You don’t have any campaigns right now
                     </p>
@@ -155,15 +160,15 @@ const NewCampaigns = () => {
                     <div className="mt-8 mb-12 w-full h-[1px] bg-gray-200/40" />
 
                     {/* Empty state content for laptop */}
-                    <div className="md:block flex mt-64 flex-col items-center justify-center h-[calc(100vh-80px)] text-center px-6">
+                    <div className="md:block flex mt-12 lg:mt-16 xl:mt-14 2xl:mt-20 flex-col items-center justify-center h-[calc(100vh-80px)] text-center px-6">
+                        <img
+                            src="/Illustration/NoCampaign.svg"
+                            alt="Campaign Illustration"
+                            className="h-96 w-96 xl:h-[26rem] xl:w-[26rem] 2xl:h-[30rem] 2xl:w-[30rem] mx-auto mt-6"
+                        />
                         <p className="text-base text-white mb-6">
                             You don’t have any campaigns right now
                         </p>
-<img
-  src="/Illustration/NewIlls.svg"
-  alt="Campaign Illustration"
-  className="w-full max-w-[300px] mx-auto mt-6"
-/>
 
                         <button
                             className="

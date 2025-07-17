@@ -11,6 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const faqData = [
     {
@@ -46,37 +47,83 @@ const Faqs = () => {
         min-h-screen flex flex-col md:flex-row text-white bg-cover bg-top md:bg-bottom
         bg-[url('/background/DashM.png')] md:bg-[url('/background/bg.png')]"
         >
-            {/* Sidebar */}
+            {/* Sidebar (Desktop Only) */}
             <aside className="hidden md:flex flex-col w-64 bg-[#111111] p-6 space-y-6">
-                <img
-                    src="/assets/logo.svg"
-                    alt="Tunefly Logo"
-                    className="w-20 lg:w-24 mx-auto mb-4"
-                />
+                <img src="/assets/logo.svg" alt="Tunefly Logo" className="w-20 lg:w-24 items-center justify-center mx-auto mb-4" />
                 <ul className="text-white text-base font-medium space-y-4">
-                    {[
-                        { icon: HomeIcon, label: "Home", path: "/dashboard" },
-                        { icon: SpeakerWaveIcon, label: "New Campaigns", path: "/campaigns" },
-                        { icon: MusicalNoteIcon, label: "Asset Library", path: "/library" },
-                        { icon: ChartBarSquareIcon, label: "Analytics", path: "/analytics" },
-                        { icon: Cog6ToothIcon, label: "Settings", path: "/settings" },
-                        { icon: QuestionMarkCircleIcon, label: "FAQs", path: "/faqs" },
-                    ].map(({ icon: Icon, label, path }) => (
-                        <li
-                            key={label}
-                            className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full cursor-pointer transition-all duration-300 ${location.pathname === path
-                                ? "bg-[#1F1F21] text-white"
-                                : "hover:bg-[#1F1F21]/50"
-                                }`}
-                        >
-                            {location.pathname === path && (
-                                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r" />
-                            )}
-                            <Icon className="w-5 h-5" />
-                            {label}
-                        </li>
-                    ))}
+                    {/* Home */}
+                    <li
+                        className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
+    ${location.pathname === '/dashboard' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+                    >
+                        {location.pathname === '/dashboard' && (
+                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-9 w-2 bg-teal-400 rounded-r"></span>
+                        )}
+                        <HomeIcon className="w-5 h-5" />
+                        <Link to="/dashboard">Home</Link>
+                    </li>
+
+                    {/* New Campaigns */}
+                    <li
+                        className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
+    ${location.pathname === '/campaigns' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+                    >
+                        {location.pathname === '/campaigns' && (
+                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
+                        )}
+                        <SpeakerWaveIcon className="w-5 h-5" />
+                        <Link to="/newCampaigns">New Campaigns</Link>
+                    </li>
+
+                    {/* Asset Library */}
+                    <li
+                        className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
+    ${location.pathname === '/library' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+                    >
+                        {location.pathname === '/library' && (
+                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
+                        )}
+                        <MusicalNoteIcon className="w-5 h-5" />
+                        <Link to="/AssetLibrary">Asset Library</Link>
+                    </li>
+
+                    {/* Analytics */}
+                    <li
+                        className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
+    ${location.pathname === '/analytics' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+                    >
+                        {location.pathname === '/analytics' && (
+                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
+                        )}
+                        <ChartBarSquareIcon className="w-5 h-5" />
+                        <Link to="/analytics">Analytics</Link>
+                    </li>
+
+                    {/* Settings */}
+                    <li
+                        className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
+    ${location.pathname === '/settings' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+                    >
+                        {location.pathname === '/settings' && (
+                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
+                        )}
+                        <Cog6ToothIcon className="w-5 h-5" />
+                        <Link to="/settings">Settings</Link>
+                    </li>
+
+                    {/* FAQs */}
+                    <li
+                        className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
+    ${location.pathname === '/faqs' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+                    >
+                        {location.pathname === '/faqs' && (
+                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
+                        )}
+                        <QuestionMarkCircleIcon className="w-5 h-5" />
+                        <Link to="/faqs">FAQs</Link>
+                    </li>
                 </ul>
+
             </aside>
 
             {/* Main Content */}
@@ -92,7 +139,7 @@ const Faqs = () => {
                 {/* Desktop Header */}
                 <div className="hidden md:block mb-6 mt-4">
                     <div className="flex items-center justify-between">
-                        <h1 className="text-2xl font-semibold text-white">FAQs</h1>
+                        <h1 className="text-2xl font-semibold text-white">Frequently Asked Questions</h1>
                         <div className="flex items-center gap-5">
                             <BellIcon className="w-6 h-6 text-white" />
                             <img
@@ -102,8 +149,10 @@ const Faqs = () => {
                             />
                         </div>
                     </div>
-                    <div className="mt-8 mb-12 w-full h-[1px] bg-gray-200/40" />
+                    <div className="mt-8 mb-8 w-full h-[1px] bg-gray-200/40" />
                 </div>
+                
+                <div className="text-xs mb-6 hidden md:block text-center text-gray-300">Answers to most frequently asked questions by our users</div>
 
                 {/* FAQ Section */}
                 <div className="space-y-4">
@@ -111,7 +160,7 @@ const Faqs = () => {
                         const isOpen = expandedIndex === index;
                         return (
                             <div key={index}>
-                                <div className="mx-4 pb-6">
+                                <div className="mx-4 md:mx-0 pb-6">
                                     <div
                                         onClick={() => setExpandedIndex(isOpen ? null : index)}
                                         className="flex justify-between items-center cursor-pointer"
@@ -130,7 +179,7 @@ const Faqs = () => {
 
                                 {/* Divider except after last item */}
                                 {index < faqData.length - 1 && (
-                                    <div className="border-t border-gray-400 mx-4"></div>
+                                    <div className="border-t border-gray-400 mx-4 md:mx-0"></div>
                                 )}
                             </div>
                         );
