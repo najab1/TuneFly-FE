@@ -15,17 +15,26 @@ import { Link } from "react-router-dom";
 
 const faqData = [
     {
-        question: "How do I make changes to my music?",
+        question: "What is the referral program?",
         answer:
-            "Updates to release dates, track or album titles, and text formatting must be provided to Tunefly by your distributor or label.",
+            "Maecenas malesuada tellus eu posuere vehicula. Nam nec dapibus nisi, quis efficitur ante. Duis nec bibendum eros. Proin euismod nulla a massa facilisis, non vestibulum augue auctor. Ut ornare at est ac ullamcorper.",
     },
     {
-        question: "Can I update my artist profile picture?",
-        answer:
-            "Yes, go to Settings > Profile and upload a new image. Please ensure the image is square and under 5MB.",
+        question: "How it works?",
+        answer: (
+            <>
+                Maecenas malesuada tellus eu posuere vehicula. Nam nec dapibus nisi, quis efficitur ante:
+                <ul className="list-disc pl-5 mt-2 space-y-1">
+                    <li>Tell your friends about Gastos Provider Club and register them on the app.</li>
+                    <li>Complete all the steps of registration including payment for registration.</li>
+                    <li>Go to the Manage Account Section in Settings page and enter your registered phone number and validate there.</li>
+                    <li>You can check in your wallet that you have received Rs 150 in your wallet.</li>
+                </ul>
+            </>
+        )
     },
     {
-        question: "How can I track campaign performance?",
+        question: "Where could I use these coins?",
         answer:
             "Navigate to Analytics in the sidebar. You’ll find detailed stats on impressions, clicks, and engagement.",
     },
@@ -131,7 +140,7 @@ const Faqs = () => {
                 {/* Mobile Header */}
                 <div className="relative mb-6 md:hidden">
                     <button className="absolute left-4 top-1/2 -translate-y-1/2">
-                        <ArrowLeftCircleIcon className="w-8 h-8 text-gray-400" onClick={() => navigate(-1)}/>
+                        <ArrowLeftCircleIcon className="w-8 h-8 text-gray-400" onClick={() => navigate(-1)} />
                     </button>
                     <h1 className="text-[1.35rem] font-semibold text-white text-center">FAQs</h1>
                 </div>
@@ -151,7 +160,7 @@ const Faqs = () => {
                     </div>
                     <div className="mt-8 mb-8 w-full h-[1px] bg-gray-200/40" />
                 </div>
-                
+
                 <div className="text-xs mb-6 hidden md:block text-center text-gray-300">Answers to most frequently asked questions by our users</div>
 
                 {/* FAQ Section */}

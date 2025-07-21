@@ -11,6 +11,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
+        openSans: ['Open Sans', 'sans-serif'],
       },
     },
   },
