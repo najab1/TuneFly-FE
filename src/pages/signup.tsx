@@ -1,10 +1,48 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { FaGoogle, FaFacebookF, FaApple } from "react-icons/fa";
-import { EyeIcon, EyeSlashIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, EyeSlashIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import countryList from "react-select-country-list";
+import { signup } from '../api/signupApi'; //Integration
+import type { SignupPayload } from '../api/signupApi'; //Integration
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
     const [showPassword, setShowPassword] = useState(false);
+    const countryOptions = useMemo(() => countryList().getData(), []);
+    const [countryOpen, setCountryOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+
+
+    //Integration Code
+    const [form, setForm] = useState<SignupPayload>({
+        name: '',
+        email: '',
+        phonenumber: '',
+        username: '',
+        password: '',
+        country: '',
+        usertype: 'artist',
+    });
+
+    const handleSignup = async () => {
+        setLoading(true);
+        setMessage('');
+
+        try {
+            const response = await signup(form);
+            setMessage(response.user); // "Account create successfully && Otp send"
+            // Optionally redirect to OTP page here
+            navigate('/login');
+        } catch (error: any) {
+            const errMsg = error.response?.data || 'Signup failed.';
+            setMessage(typeof errMsg === 'string' ? errMsg : 'Something went wrong.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="relative min-h-screen flex items-center justify-center pt-10 pb-10 lg:pt-0 lg:pb-0">
@@ -36,40 +74,67 @@ function Signup() {
 
                         {/* Input fields */}
                         <div className="space-y-4">
-                            {["Name", "Email", "Phone number (optional)", "Username"].map((placeholder, idx) => (
+                            {[
+                                { label: "Name", key: "name" },
+                                { label: "Email", key: "email" },
+                                { label: "Phone number (optional)", key: "phonenumber" },
+                                { label: "Username", key: "username" },
+                            ].map(({ label, key }, idx) => (
                                 <div key={idx} className="p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
                                     <input
                                         type="text"
-                                        placeholder={placeholder}
-                                        className="w-full px-4 py-4 xl:py-3 lg:py-2 md:py-3 bg-[#1F1F21] text-white placeholder-gray-300 rounded-md focus:outline-none text-sm md:text-sm xl:text-sm"
+                                        placeholder={label}
+                                        name={key}
+                                        value={form[key as keyof typeof form]}
+                                        onChange={e => setForm(prev => ({ ...prev, [key]: e.target.value }))}
+                                        className="w-full px-4 py-4 xl:py-3 lg:py-2 md:py-3 bg-[#1F1F21] text-white placeholder-gray-300 rounded-md focus:outline-none text-sm"
                                     />
                                 </div>
                             ))}
 
                             {/* Country Field with Chevron Icon */}
-                            <div className="p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
-                                <div className="flex items-center bg-[#1F1F21] rounded-md px-4 py-4 xl:py-3 lg:py-2 md:py-3">
-                                    <input
-                                        type="text"
-                                        placeholder="Country"
-                                        className="flex-1 bg-transparent text-white placeholder-gray-300 focus:outline-none text-sm md:text-sm xl:text-sm"
-                                    />
-                                    <ChevronDownIcon className="w-5 h-5 text-white ml-2" />
+                            <div className="flex flex-col active:cursor-pointer">
+                                <div className="relative p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
+                                    <select
+                                        id="country"
+                                        value={form.country}
+                                        onChange={e => setForm(prev => ({ ...prev, country: e.target.value }))}
+                                        onFocus={() => setCountryOpen(true)}
+                                        onBlur={() => setCountryOpen(false)}
+                                        className="w-full px-4 py-3 rounded-md bg-[#1f1f21] text-white text-sm outline-none appearance-none pr-8 cursor-pointer"
+                                    >
+                                        <option value="" disabled>Choose your country</option>
+                                        {countryOptions.map(c => (
+                                            <option key={c.value} value={c.value}>
+                                                {c.label}
+                                            </option>
+                                        ))}
+                                    </select>
+
+                                    {/* chevron */}
+                                    <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                                        {countryOpen
+                                            ? <ChevronUpIcon className="w-4 h-4 text-gray-400" />
+                                            : <ChevronDownIcon className="w-4 h-4 text-gray-400" />
+                                        }
+                                    </div>
                                 </div>
                             </div>
 
                             {/* Password Field with Eye Icon */}
                             <div className="p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
-                                <div className="flex items-center bg-[#1F1F21] rounded-md px-4 py-4 xl:py-3 lg:py-2 md:py-3">
+                                <div className="flex items-center bg-[#1F1F21] rounded-md pl-4 pr-2 py-4 xl:py-3 lg:py-2 md:py-3">
                                     <input
                                         type={showPassword ? "text" : "password"}
                                         placeholder="Password"
+                                        value={form.password}
+                                        onChange={e => setForm(prev => ({ ...prev, password: e.target.value }))}
                                         className="flex-1 bg-transparent text-white placeholder-gray-300 focus:outline-none text-sm md:text-sm xl:text-sm"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword((prev) => !prev)}
-                                        className="ml-2 text-white"
+                                        className=" text-white"
                                     >
                                         {showPassword ? (
                                             <EyeSlashIcon className="w-5 h-5" />
@@ -100,9 +165,17 @@ function Signup() {
                         </div>
 
                         {/* Signup Button */}
-                        <button className="w-full py-2 xl:py-1 lg:py-1 md:py-2 mt-2 font-semibold text-white rounded-md bg-gradient-to-r from-pink-500 to-teal-400 hover:opacity-90">
-                            SIGN UP
+                        <button
+                            className="w-full py-2 xl:py-1 mt-2 font-semibold text-white rounded-md bg-gradient-to-r from-pink-500 to-teal-400 hover:opacity-90"
+                            onClick={handleSignup}
+                            disabled={loading}
+                        >
+                            {loading ? "Signing up..." : "SIGN UP"}
                         </button>
+
+                        {message && (
+                            <p className="text-center text-sm mt-4 text-gray-300">{message}</p>
+                        )}
 
                         {/* Login Link */}
                         <p className="text-sm text-center text-gray-400 mt-6">

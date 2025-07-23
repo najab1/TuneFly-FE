@@ -12,6 +12,7 @@ import ChangePassword from "./pages/changePassword";
 import IntegratedAccount from "./pages/integratedAccounts";
 import Faqs from "./pages/faqs";
 import QrLanding from "./pages/qrLanding";
+import VerifyScreen from "./pages/verifyScreen";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/verifyEmail" element={<VerifyScreen />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/newCampaigns" element={<NewCampaigns />} />
         <Route path="/createCampaigns" element={<CreateCampaigns />} />
