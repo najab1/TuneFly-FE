@@ -8,8 +8,6 @@ export interface SignupPayload {
     phonenumber?: string;
     country: string;
     usertype: 'artist' | 'driver';
-
-    // Only for driver (optional in form, but required if usertype === "driver")
     cartype?: string;
     make?: string;
     model?: string;
@@ -22,6 +20,8 @@ export interface SignupResponse {
 }
 
 export const signup = async (data: SignupPayload): Promise<SignupResponse> => {
-    const response = await api.post<SignupResponse>('/auth/signup', data);
-    return response.data;
+    // Step 1: Signup
+    const signupResponse = await api.post<SignupResponse>('/api/auth/signup', data);
+
+    return signupResponse.data;
 };

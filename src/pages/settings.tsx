@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
     BellIcon,
     SpeakerWaveIcon,
@@ -21,6 +21,8 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import countryList from 'react-select-country-list';
+import { uploadAvatar } from "../api/uploadAvatarApi";
+import { jwtDecode } from "jwt-decode";
 
 const Settings = () => {
     const location = useLocation();
@@ -32,6 +34,24 @@ const Settings = () => {
     const [showCurrent, setShowCurrent] = useState(false);
     const [showNew, setShowNew] = useState(false);
     const navigate = useNavigate();
+    //Avatar upload states
+    const [avatar, setAvatar] = useState("/profile/Profile.png"); // Default image path
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [uploading, setUploading] = useState(false);
+
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        const filename = localStorage.getItem("avatar");
+
+        if (token && filename) {
+            const decoded: any = jwtDecode(token);
+            const userId = decoded.uuid;
+
+            const fullUrl = `${import.meta.env.VITE_API_BASE_URL}public/avatar/${userId}/${filename}`;
+            setAvatar(fullUrl);
+        }
+    }, []);
 
     // Clickable routes
     const settingsOptions = [
@@ -52,6 +72,44 @@ const Settings = () => {
         },
     ];
 
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setSelectedFile(file);
+            setAvatar(URL.createObjectURL(file)); // Temporary preview
+        }
+    };
+
+    // Uploading the avatar image
+    const handleUploadAvatar = async () => {
+        if (!selectedFile) return;
+
+        try {
+            setUploading(true);
+            const token = localStorage.getItem("token");
+            if (!token) throw new Error("User not logged in");
+
+            const res = await uploadAvatar(selectedFile, token);
+            console.log("Upload successful", res);
+
+            // Store filename in localStorage
+            localStorage.setItem("avatar", res.uploadavatar.avatar);
+        } catch (err: any) {
+            console.error("Upload failed:", err?.response?.data?.message || err.message);
+        } finally {
+            setUploading(false);
+        }
+    };
+
+    //Deleting the avatar image
+    const handleDeleteAvatarClientOnly = () => {
+        // Remove the saved filename so useEffect won’t pick it up next time
+        localStorage.removeItem("avatar");
+        // Reset the avatar state back to your default
+        setAvatar("/profile/Profile.png");
+    };
+
+
     return (
         <div
             className="
@@ -60,7 +118,6 @@ const Settings = () => {
       "
         >
             {/* Sidebar (Desktop Only) */}
-{/* Sidebar (Desktop Only) */}
             <aside className="hidden md:flex flex-col w-64 bg-[#111111] p-6 space-y-6">
                 <img src="/assets/logo.svg" alt="Tunefly Logo" className="w-20 lg:w-24 items-center justify-center mx-auto mb-4" />
                 <ul className="text-white text-base font-medium space-y-4">
@@ -177,7 +234,7 @@ const Settings = () => {
                     {/* Profile Image with Gradient Border */}
                     <div className="rounded-full w-24 h-24 mb-6">
                         <img
-                            src="/profile/Profile.png"
+                            src={avatar}
                             alt="User"
                             className="w-full h-full rounded-full object-cover"
                         />
@@ -233,7 +290,8 @@ const Settings = () => {
                         <div className="flex flex-col items-center gap-4">
                             <div className="w-28 h-28 rounded-full overflow-hidden">
                                 <img
-                                    src="/profile/Profile.png"
+                                    src={avatar}
+                                    onError={(e) => (e.currentTarget.src = "/profile/Profile.png")}
                                     alt="User"
                                     className="w-full h-full object-cover"
                                 />
@@ -248,14 +306,31 @@ const Settings = () => {
                         <div className="flex flex-col items-end gap-3 mt-12">
                             <div className="flex gap-3">
                                 {/* Outlined gradient button */}
-                                <div className="p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
-                                    <button className="bg-[#1f1f21] text-white font-medium text-xs px-4 py-2 rounded-md">
+                                <label className="p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400 cursor-pointer">
+                                    <span className="bg-[#1f1f21] text-white font-medium text-xs px-4 py-2 rounded-md block">
                                         Upload new picture
+                                    </span>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        className="hidden"
+                                        onChange={handleImageChange}
+                                    />
+                                </label>
+
+                                {selectedFile && (
+                                    <button
+                                        onClick={handleUploadAvatar}
+                                        className="bg-gradient-to-r from-pink-500 to-teal-400 text-white font-medium text-xs px-4 py-2 rounded-md"
+                                    >
+                                        {uploading ? "Uploading..." : "Confirm Upload"}
                                     </button>
-                                </div>
+                                )}
 
                                 {/* Solid gradient button */}
-                                <button className="bg-gradient-to-r from-pink-500 to-teal-400 text-white font-medium text-xs px-4 py-2 rounded-md">
+                                <button
+                                    onClick={handleDeleteAvatarClientOnly}
+                                    className="bg-gradient-to-r from-pink-500 to-teal-400 text-white font-medium text-xs px-4 py-2 rounded-md">
                                     Delete picture
                                 </button>
                             </div>

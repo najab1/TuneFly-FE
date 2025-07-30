@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import {
     BellIcon,
     SpeakerWaveIcon,
@@ -7,15 +8,67 @@ import {
     QuestionMarkCircleIcon,
     HomeIcon,
     ArrowLeftCircleIcon,
-    CloudArrowUpIcon
+    CloudArrowUpIcon,
+    ChevronUpIcon,
+    ChevronDownIcon,
+    PhotoIcon
 } from "@heroicons/react/24/outline";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import countryList from "react-select-country-list";
+import { createCampaign } from "../api/createCampaignApi";
+import { jwtDecode } from "jwt-decode";
 
 const CreateCampaigns = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const countryOptions = useMemo(() => countryList().getData(), []);
+    const [countryOpen, setCountryOpen] = useState(false);
+    const [gnereOpen, setGenreOpen] = useState(false);
+    const [artistName, setArtistName] = useState("");
+    const [songName, setSongName] = useState("");
+    const [genre, setGenre] = useState("");
+    const [targetedCountry, setTargetedCountry] = useState("");
+    const [coverArt, setCoverArt] = useState<File | null>(null);
+    const [mediaFile, setMediaFile] = useState<File | null>(null);
+    const [ownRights, setOwnRights] = useState(false);
+
+    //Token
+    const token = localStorage.getItem("token") || "";
+    const decoded: any = token ? jwtDecode(token) : null;
+    const userId = decoded?.uuid || "";
+
+    const handleSubmit = async () => {
+        if (!artistName || !songName || !genre || !targetedCountry || !coverArt || !mediaFile) {
+            alert("Please fill all fields and upload the files.");
+            return;
+        }
+        
+        try {
+            await createCampaign({
+                userId,
+                artistname: artistName,
+                songname: songName,
+                genre,
+                country: targetedCountry,
+                cover: coverArt,
+                media: mediaFile,
+                budgetplan: "Starter",         // static for now
+                budgetamount: "100",           // static for now
+                startDateTime: new Date().toISOString(),
+                endDateTime: new Date(Date.now() + 7 * 86400000).toISOString(),
+                token,
+            });
+
+            alert("Campaign created successfully ✅");
+            navigate("/dashboard");
+        } catch (error) {
+            console.error("Error creating campaign:", error);
+            alert("Something went wrong while creating campaign ❌");
+        }
+    };
+
 
     return (
         <div
@@ -143,6 +196,8 @@ const CreateCampaigns = () => {
                                 <input
                                     type="text"
                                     id="artistName"
+                                    value={artistName}
+                                    onChange={(e) => setArtistName(e.target.value)}
                                     placeholder="e.g. Taylor Swift"
                                     className="w-full bg-[#1f1f21] bg-opacity-100 text-white placeholder-gray-400 placeholder:text-xs placeholder-3 px-4 py-3 rounded-md outline-none"
                                 />
@@ -156,6 +211,8 @@ const CreateCampaigns = () => {
                                 <input
                                     type="text"
                                     id="songName"
+                                    value={songName}
+                                    onChange={(e) => setSongName(e.target.value)}
                                     placeholder="e.g. Cruel Summer"
                                     className="w-full bg-[#1f1f21] bg-opacity-100 text-white placeholder-gray-400 placeholder:text-xs px-4 py-3 rounded-md outline-none"
                                 />
@@ -168,74 +225,176 @@ const CreateCampaigns = () => {
                             <div className="relative p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
                                 <select
                                     id="genre"
-                                    className="w-full bg-[#1f1f21] bg-opacity-100 text-white text-xs px-4 py-3 pr-10 rounded-md outline-none appearance-none"
+                                    value={genre}
+                                    onChange={(e) => setGenre(e.target.value)}
+                                    className="w-full bg-[#1f1f21] bg-opacity-100 text-white text-sm px-4 py-3 pr-10 rounded-md outline-none appearance-none cursor-pointer"
                                     defaultValue=""
+                                    onFocus={() => setGenreOpen(true)}
+                                    onBlur={() => setGenreOpen(false)}
                                 >
                                     <option value="" disabled hidden>e.g. Pop</option>
-                                    <option value="pop" className="bg-black">Pop</option>
-                                    <option value="rock" className="bg-black">Rock</option>
-                                    <option value="hiphop" className="bg-black">Hip-Hop</option>
-                                    <option value="indie" className="bg-black">Indie</option>
-                                    <option value="other" className="bg-black">Other</option>
+
+                                    {[
+                                        "Pop", "Rock", "Hip-Hop", "R&B", "Jazz", "Electronic", "Classical", "Reggae", "Blues",
+                                        "Country", "Metal", "Folk", "Soul", "Funk", "Lo-fi", "Trap", "Techno", "House", "Dubstep",
+                                        "Ambient", "Trance", "Drum & Bass", "K-Pop", "J-Pop", "Latin", "Afrobeats", "Dancehall",
+                                        "Disco", "Indie", "Opera", "Gospel", "Punk", "Alternative", "Grunge", "Synthpop",
+                                        "EDM", "Chillout", "Acoustic", "Instrumental", "Soundtrack", "World"
+                                    ].map((genre) => (
+                                        <option key={genre} value={genre.toLowerCase()} className="bg-black">
+                                            {genre}
+                                        </option>
+                                    ))}
                                 </select>
-                                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                                    </svg>
+
+                                {/* chevron */}
+                                <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                                    {gnereOpen
+                                        ? <ChevronUpIcon className="w-4 h-4 text-gray-400" />
+                                        : <ChevronDownIcon className="w-4 h-4 text-gray-400" />
+                                    }
                                 </div>
                             </div>
                         </div>
 
-
                         {/* Country Dropdown */}
-                        <div className="flex flex-col">
+                        <div className="flex flex-col active:cursor-pointer">
                             <label htmlFor="country" className="text-white text-sm mb-2">Targeted Country</label>
                             <div className="relative p-[1px] rounded-md bg-gradient-to-r from-pink-500 to-teal-400">
                                 <select
                                     id="country"
-                                    className="w-full bg-[#1f1f21] bg-opacity-100 text-white text-xs px-4 py-3 pr-10 rounded-md outline-none appearance-none"
-                                    defaultValue=""
+                                    value={targetedCountry}
+                                    onChange={(e) => setTargetedCountry(e.target.value)}
+                                    onFocus={() => setCountryOpen(true)}
+                                    onBlur={() => setCountryOpen(false)}
+                                    className="w-full px-4 py-3 rounded-md bg-[#1f1f21] text-white text-sm outline-none appearance-none pr-8 cursor-pointer"
                                 >
-                                    <option value="" disabled hidden>e.g. United States</option>
-                                    <option value="pk" className="bg-black">Pakistan</option>
-                                    <option value="us" className="bg-black">United States</option>
-                                    <option value="uk" className="bg-black">United Kingdom</option>
+                                    <option value="" disabled>Choose your country</option>
+                                    {countryOptions.map(c => (
+                                        <option key={c.value} value={c.value}>
+                                            {c.label}
+                                        </option>
+                                    ))}
                                 </select>
-                                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                                    </svg>
+
+                                {/* chevron */}
+                                <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                                    {countryOpen
+                                        ? <ChevronUpIcon className="w-4 h-4 text-gray-400" />
+                                        : <ChevronDownIcon className="w-4 h-4 text-gray-400" />
+                                    }
                                 </div>
                             </div>
                         </div>
+
+                        {/* Upload Cover Art */}
+                        <div className="flex flex-col lg:col-span-2">
+                            <label className="text-white text-sm mb-2">Upload Campaign Image</label>
+                            <div className="p-[1px] rounded-lg bg-gradient-to-r from-pink-500 to-teal-400">
+                                <div className="rounded-lg bg-black bg-opacity-80 px-4 py-6 flex flex-col items-center justify-center text-white text-sm text-center">
+
+                                    <PhotoIcon className="h-12 w-12 text-white mb-3" />
+                                    <p className="font-semibold">Select image to upload</p>
+                                    <p className="text-xs text-gray-300 mt-1 mb-4">
+                                        Supported Format: JPG, JPEG, PNG
+                                    </p>
+
+                                    {/* Hidden file input */}
+                                    <input
+                                        type="file"
+                                        id="coverUpload"
+                                        accept="image/*"
+                                        className="hidden"
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0];
+                                            if (file) {
+                                                setCoverArt(file);
+                                            }
+                                        }}
+                                    />
+
+                                    {/* Styled label as button */}
+                                    <label
+                                        htmlFor="coverUpload"
+                                        className="text-sm bg-white text-black px-4 py-[6px] rounded-full font-medium cursor-pointer"
+                                    >
+                                        Select File
+                                    </label>
+
+                                    {/* Optional preview */}
+                                    {coverArt && (
+                                        <p className="text-xs text-green-400 mt-2">
+                                            Selected: {coverArt.name}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
 
                         {/* Upload Track */}
                         <div className="flex flex-col lg:col-span-2">
                             <label className="text-white text-sm mb-2">Upload Track</label>
                             <div className="p-[1px] rounded-lg bg-gradient-to-r from-pink-500 to-teal-400">
                                 <div className="rounded-lg bg-black bg-opacity-80 px-4 py-6 flex flex-col items-center justify-center text-white text-sm text-center">
+
                                     <CloudArrowUpIcon className="h-12 w-12 text-white mb-3" />
                                     <p className="font-semibold">Select song to upload</p>
                                     <p className="text-xs text-gray-300 mt-1 mb-4">
                                         Supported Format: MP3, WAV, AAC
                                     </p>
-                                    <button className="text-sm bg-white text-black px-4 py-[6px] rounded-full font-medium">
+
+                                    {/* Hidden file input */}
+                                    <input
+                                        type="file"
+                                        id="trackUpload"
+                                        accept=".mp3,.wav,.aac"
+                                        className="hidden"
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0];
+                                            if (file) {
+                                                setMediaFile(file);
+                                            }
+                                        }}
+                                    />
+
+                                    {/* Styled label as file select trigger */}
+                                    <label
+                                        htmlFor="trackUpload"
+                                        className="text-sm bg-white text-black px-4 py-[6px] rounded-full font-medium cursor-pointer"
+                                    >
                                         Select File
-                                    </button>
+                                    </label>
+
+                                    {/* Optional file name preview */}
+                                    {mediaFile && (
+                                        <p className="text-xs text-green-400 mt-2">
+                                            Selected: {mediaFile.name}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                         </div>
 
                         {/* Rights Checkbox */}
                         <div className="flex items-center gap-2 text-sm text-white">
-                            <input type="checkbox" id="rights" className="accent-pink-500" />
+                            <input
+                                type="checkbox"
+                                id="rights"
+                                checked={ownRights}
+                                onChange={(e) => setOwnRights(e.target.checked)}
+                                className="accent-pink-500"
+                            />
                             <label htmlFor="rights">Own full rights to this song</label>
                         </div>
 
                         {/* Create Campaign Button */}
                         <div className="w-full flex justify-center md:justify-end">
                             <button className="hidden md:block text-xs mr-8">Cancel</button>
-                            <button className="w-full md:rounded-md md:text-xs md:w-40 bg-gradient-to-r from-pink-500 to-teal-400 text-white font-semibold text-sm px-6 py-3 rounded-full shadow-md transition-all hover:brightness-110">
+                            <button
+                                onClick={handleSubmit}
+                                className="w-full md:rounded-md md:text-xs md:w-40 bg-gradient-to-r from-pink-500 to-teal-400 text-white font-semibold text-sm px-6 py-3 rounded-full shadow-md transition-all hover:brightness-110">
+
                                 Create Campaign
                             </button>
                         </div>

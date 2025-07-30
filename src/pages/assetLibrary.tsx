@@ -12,10 +12,30 @@ import {
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { getArtistLibrary } from "../api/getArtistLibraryApi";
+import type { Campaign } from "../api/getArtistLibraryApi";
+import { useEffect, useState } from "react";
 
 const AssetLibrary = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+
+    useEffect(() => {
+        const fetchLibrary = async () => {
+            try {
+                const token = localStorage.getItem("token") || "";
+                const data = await getArtistLibrary(token); // ✅ API call
+                console.log("Raw campaign data: ", data);
+                setCampaigns(data); // ✅ set array of campaigns
+            } catch (error) {
+                console.error("Error fetching campaigns:", error);
+            }
+        };
+
+        fetchLibrary();
+    }, []);
+
 
     return (
         <div
@@ -24,7 +44,7 @@ const AssetLibrary = () => {
         bg-[url('/background/DashM.png')] md:bg-[url('/background/bg.png')]
       "
         >
-{/* Sidebar (Desktop Only) */}
+            {/* Sidebar (Desktop Only) */}
             <aside className="hidden md:flex flex-col w-64 bg-[#111111] p-6 space-y-6">
                 <img src="/assets/logo.svg" alt="Tunefly Logo" className="w-20 lg:w-24 items-center justify-center mx-auto mb-4" />
                 <ul className="text-white text-base font-medium space-y-4">
@@ -139,37 +159,35 @@ const AssetLibrary = () => {
                                 md:gap-4                  /* bigger gap on desktop    */
                             "
                 >
-                    {[
-                        { name: "Cruel Summer", status: "Approved", img: "/assets/taylor.svg", statusColor: "text-teal-400" },
-                        { name: "Blank Space", status: "Pending", img: "/assets/taylor.svg", statusColor: "text-pink-400" },
-                        { name: "Bad Blood", status: "Approved", img: "/assets/taylor.svg", statusColor: "text-teal-400" },
-                    ].map((song, idx) => (
-                        /* outer mx-4 ⇒ 16 px margin left/right (matches Figma) */
-                        <div key={idx} className="mx-4 md:mx-0">
-                            {/* gradient border */}
-                            <div className="p-[1px] rounded-xl bg-gradient-to-r from-pink-500 to-teal-400">
-                                {/* card body */}
-                                <div className="bg-[#111111] rounded-xl py-5 pl-5 pr-4 flex items-center justify-between">
-                                    {/* image + meta */}
-                                    <div className="flex items-center gap-4">
-                                        <img
-                                            src={song.img}
-                                            alt={song.name}
-                                            className="w-24 h-24 object-cover rounded-xl"
-                                        />
-                                        <div className="flex flex-col">
-                                            <span className="text-white font-semibold">{song.name}</span>
-                                            <span className={`text-sm font-medium ${song.statusColor}`}>
-                                                Status: {song.status}
-                                            </span>
+                    {campaigns.map((campaign, idx) => {
+                        const statusColor = campaign.subscription ? "text-teal-400" : "text-pink-400";
+                        const imageUrl = `${import.meta.env.VITE_API_BASE_URL}public/artist/${campaign.userId}/cover/${campaign.coverart}`;
+                        console.log("→ cover image URL:", imageUrl);
+
+                        return (
+                            <div key={idx} className="mx-4 md:mx-0">
+                                <div className="p-[1px] rounded-xl bg-gradient-to-r from-pink-500 to-teal-400">
+                                    <div className="bg-[#111111] rounded-xl py-5 pl-5 pr-4 flex items-center justify-between">
+                                        <div className="flex items-center gap-4">
+                                            <img
+                                                src={imageUrl}
+                                                alt={campaign.songname}
+                                                className="w-24 h-24 object-cover rounded-xl"
+                                                onError={(e) => (e.currentTarget.src = "/fallback/cover.png")}
+                                            />
+                                            <div className="flex flex-col">
+                                                <span className="text-white font-semibold">{campaign.songname}</span>
+                                                <span className={`text-sm font-medium ${statusColor}`}>
+                                                    Status: {campaign.subscription ? "Approved" : "Pending"}
+                                                </span>
+                                            </div>
                                         </div>
+                                        <PencilIcon className="w-5 h-5 text-white shrink-0" />
                                     </div>
-                                    {/* edit icon */}
-                                    <PencilIcon className="w-5 h-5 text-white shrink-0" />
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </div>

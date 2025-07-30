@@ -132,10 +132,19 @@ function Login() {
 
         try {
             const response = await login(form);
-            console.log(response); // debug
 
-            setMessage('Login successful!');
-            navigate('/dashboard');
+            // extract from nested shape
+            const token = response.user.token;
+            const user = response.user.user;
+
+            if (token && user) {
+                localStorage.setItem('token', token);
+
+                setMessage('Login successful!');
+                navigate('/dashboard');
+            } else {
+                throw new Error("Invalid response structure");
+            }
 
         } catch (error: any) {
             const errMsg = error.response?.data?.message || 'Login failed.';
@@ -144,6 +153,7 @@ function Login() {
             setLoading(false);
         }
     };
+
 
     return (
         <div className="relative min-h-screen flex items-center justify-center">
