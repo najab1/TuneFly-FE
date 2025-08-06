@@ -9,16 +9,26 @@ import {
     UserGroupIcon,
     QrCodeIcon,
     CurrencyDollarIcon,
-    ArrowRightStartOnRectangleIcon
+    ArrowRightStartOnRectangleIcon,
+    MagnifyingGlassIcon,
+    ArrowsUpDownIcon,
+    AdjustmentsVerticalIcon,
+    PowerIcon
 } from "@heroicons/react/24/outline";
 import { Dialog } from "@headlessui/react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import LogoutModal from "./modals/LogoutModal";
 
 const AdminDashboard = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const location = useLocation();
+
+    const handleLogout = () => {
+
+    };
 
     return (
         <div
@@ -30,71 +40,94 @@ const AdminDashboard = () => {
         >
 
             {/* Sidebar (Desktop Only) */}
-            <aside className="hidden md:flex flex-col w-64 bg-[#111111] p-6 space-y-6">
-                <img src="/assets/logo.svg" alt="Tunefly Logo" className="w-20 lg:w-24 items-center justify-center mx-auto mb-4" />
-                <ul className="text-white text-base font-medium space-y-4">
-                    {/* Home */}
-                    <li
-                        className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-    ${location.pathname === '/dashboard' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
-                    >
-                        {location.pathname === '/dashboard' && (
-                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
-                        )}
-                        <HomeIcon className="w-5 h-5" />
-                        <Link to="/admin/dashboard">Home</Link>
-                    </li>
+            <aside className="hidden md:flex flex-col justify-between h-screen w-64 bg-[#111111] p-6">
+                {/* Top Section: Logo + Navigation */}
+                <div>
+                    <img
+                        src="/assets/logo.svg"
+                        alt="Tunefly Logo"
+                        className="w-20 lg:w-24 mx-auto mb-12"
+                    />
 
-                    {/* New Campaigns */}
-                    <li
-                        className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-    ${location.pathname === '/campaigns' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
-                    >
-                        {location.pathname === '/campaigns' && (
-                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
-                        )}
-                        <UserIcon className="w-5 h-5" />
-                        <Link to="/newCampaigns">Driver Profiles</Link>
-                    </li>
+                    <ul className="text-white text-base font-medium space-y-4">
+                        {/* Home */}
+                        <li
+                            className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
+          ${location.pathname === '/admin/dashboard' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+                        >
+                            {location.pathname === '/admin/dashboard' && (
+                                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
+                            )}
+                            <HomeIcon className="w-5 h-5" />
+                            <Link to="/admin/dashboard">Home</Link>
+                        </li>
 
-                    {/* Asset Library */}
-                    <li
-                        className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-    ${location.pathname === '/library' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
-                    >
-                        {location.pathname === '/library' && (
-                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
-                        )}
-                        <UserGroupIcon className="w-5 h-5" />
-                        <Link to="/AssetLibrary">Artist Profiles</Link>
-                    </li>
+                        {/* Driver Profiles */}
+                        <li
+                            className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
+          ${location.pathname === '/admin/driverProfile' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+                        >
+                            {location.pathname === '/admin/driverProfile' && (
+                                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
+                            )}
+                            <UserIcon className="w-5 h-5" />
+                            <Link to="/admin/driverProfile">Driver Profiles</Link>
+                        </li>
 
-                    {/* Analytics */}
-                    <li
-                        className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-    ${location.pathname === '/analytics' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
-                    >
-                        {location.pathname === '/analytics' && (
-                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
-                        )}
-                        <QrCodeIcon className="w-5 h-5" />
-                        <Link to="/analytics">QR Codes</Link>
-                    </li>
+                        {/* Artist Profile */}
+                        <li
+                            className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
+          ${location.pathname === '/admin/artistProfile' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+                        >
+                            {location.pathname === '/admin/artistProfile' && (
+                                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
+                            )}
+                            <UserGroupIcon className="w-5 h-5" />
+                            <Link to="/admin/artistProfile">Artist Profiles</Link>
+                        </li>
 
-                    {/* Settings */}
-                    <li
-                        className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-    ${location.pathname === '/settings' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
-                    >
-                        {location.pathname === '/settings' && (
-                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
-                        )}
-                        <CurrencyDollarIcon className="w-5 h-5" />
-                        <Link to="/settings">Music Rates</Link>
-                    </li>
-                </ul>
+                        {/* QR Code */}
+                        <li
+                            className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
+          ${location.pathname === '/admin/noQR' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+                        >
+                            {location.pathname === '/admin/noQR' && (
+                                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
+                            )}
+                            <QrCodeIcon className="w-5 h-5" />
+                            <Link to="/admin/noQR">QR Codes</Link>
+                        </li>
 
+                        {/* Music Rates */}
+                        <li
+                            className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
+          ${location.pathname === '/admin/musicRates' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+                        >
+                            {location.pathname === '/admin/musicRates' && (
+                                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
+                            )}
+                            <CurrencyDollarIcon className="w-5 h-5" />
+                            <Link to="/admin/musicRates">Music Rates</Link>
+                        </li>
+                        <li className="ml-4 pt-2">
+                            <button
+                                onClick={() => setShowModal(true)}
+                                className="flex items-center gap-2 text-pink-500 hover:text-pink-400 transition-colors"
+                            >
+                                <PowerIcon className="w-5 h-5" />
+                                <span className="text-base font-medium">Logout</span>
+                            </button>
+                        </li>
+                    </ul>
+                    {/* Reusable Logout Modal */}
+                    <LogoutModal
+                        isOpen={showModal}
+                        onClose={() => setShowModal(false)}
+                        onConfirm={handleLogout}
+                    />
+                </div>
             </aside>
+
 
             {/* Main Content */}
             <div className="flex-1 px-4 py-6 lg:px-10 xl:px-14 2xl:px-20">
@@ -179,7 +212,7 @@ const AdminDashboard = () => {
 
 
                 {/* Stat Cards */}
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 mb-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 mb-6">
                     {/* Total Impressions */}
                     <div className="bg-[#1F1F21]/70 rounded-md border border-pink-500 p-4 lg:p-6 xl:p-8 
                   h-28 sm:h-32 md:h-36 xl:h-40 
@@ -225,7 +258,7 @@ const AdminDashboard = () => {
                     </div>
                 </div>
                 {/* Artist Library Request */}
-                <div className="mb-8">
+                <div className="mb-8 lg:hidden">
                     <div className="flex items-center justify-between mb-4">
                         <h2 className="text-lg md:text-xl font-semibold lg:text-sm">Artist Library Request</h2>
                         <button className="bg-gradient-to-r from-pink-500 to-teal-400 p-[1px] rounded-md">
@@ -254,7 +287,7 @@ const AdminDashboard = () => {
 
                 {/* Artist User Request */}
                 <div>
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-4 lg:hidden">
                         <h2 className="text-lg md:text-xl font-semibold">Artist User Request</h2>
                         <button className="bg-gradient-to-r from-pink-500 to-teal-400 p-[1px] rounded-md">
                             <div className="bg-[#1F1F21] px-4 py-1 rounded-md text-sm md:text-base">
@@ -263,7 +296,7 @@ const AdminDashboard = () => {
                         </button>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-4 lg:hidden">
                         {[1, 2].map((_, i) => (
                             <div key={i} className="bg-gradient-to-r from-pink-500 to-teal-400 p-[1px] rounded-md">
                                 <div className="bg-[#1F1F21] p-4 rounded-md">
@@ -277,6 +310,86 @@ const AdminDashboard = () => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                </div>
+
+                {/* Desktop */}
+                <div className="hidden lg:flex items-center justify-between mb-4 mt-10">
+                    {/* Heading on the left */}
+                    <h2 className="text-lg font-semibold lg:text-xl">
+                        Artist Library Request Approval for Track
+                    </h2>
+
+                    {/* Icons and button on the right */}
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1 text-gray-400 text-xs">
+                            <AdjustmentsVerticalIcon className="h-5 w-5" />
+                            <span>Filter</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-gray-400 text-xs">
+                            <ArrowsUpDownIcon className="h-5 w-5" />
+                            <span>Sort</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-gray-400 text-xs">
+                            <MagnifyingGlassIcon className="h-5 w-5" />
+                            <span>Search</span>
+                        </div>
+                        <button className="bg-gradient-to-r from-pink-500 to-teal-400 p-[1px] rounded-md">
+                            <div className="bg-[#1F1F21] px-4 py-1 rounded-md text-xs">
+                                View all
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                {/* Desktop Table - Visible on lg and above */}
+                <div className="hidden lg:block mt-8">
+                    <div className="bg-gradient-to-r from-pink-500 to-teal-400 p-[1px] rounded-md">
+                        <div className="overflow-x-auto rounded-md">
+                            <table className="min-w-full text-left text-sm text-white">
+                                <thead className="bg-[#c0c0c0] text-black text-xs">
+                                    <tr>
+                                        <th className="px-6 py-3">Sr No.</th>
+                                        <th className="px-6 py-3">Artist Name</th>
+                                        <th className="px-6 py-3">Song Name</th>
+                                        <th className="px-6 py-3">Genre</th>
+                                        <th className="px-6 py-3">Country</th>
+                                        <th className="px-6 py-3">Track Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-gradient-to-b from-[#111112] to-[#1A1A1B]">
+                                    {[1, 2, 3, 4].map((num, index) => (
+                                        <tr key={index} className="border-t border-gray-700">
+                                            <td className="px-6 py-2">{num}</td>
+                                            <td className="px-6 py-2">Taylor Swift</td>
+                                            <td className="px-6 py-2">Cruel Summer</td>
+                                            <td className="px-6 py-2">Pop</td>
+                                            <td className="px-6 py-2">
+                                                {index === 1 ? "UK" : index === 3 ? "Canada" : "USA"}
+                                            </td>
+                                            <td className="px-6 py-2">
+                                                <td className="px-6 py-2">
+                                                    {index % 2 === 0 ? (
+                                                        // Show Approved
+                                                        <span className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-teal-400 text-white text-xs font-semibold px-4 py-1 rounded-full">
+                                                            <span className="w-2 h-2 bg-white rounded-full"></span>
+                                                            Approved
+                                                        </span>
+                                                    ) : (
+                                                        // Show Pending
+                                                        <span className="inline-flex items-center gap-2 bg-[#D9D9D9] text-black text-xs font-semibold px-4 py-1 rounded-full">
+                                                            <span className="w-2 h-2 bg-black rounded-full"></span>
+                                                            Pending
+                                                        </span>
+                                                    )}
+                                                </td>
+
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,12 +1,11 @@
 import {
     BellIcon,
-    SpeakerWaveIcon,
-    MusicalNoteIcon,
-    ChartBarSquareIcon,
-    Cog6ToothIcon,
-    QuestionMarkCircleIcon,
     HomeIcon,
     ArrowLeftCircleIcon,
+    UserIcon,
+    CurrencyDollarIcon,
+    UserGroupIcon,
+    QrCodeIcon
 } from "@heroicons/react/24/outline";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -32,73 +31,61 @@ const QRGenerator = () => {
                     {/* Home */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-    ${location.pathname === '/dashboard' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+    ${location.pathname === '/admin/dashboard' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === '/dashboard' && (
-                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-9 w-2 bg-teal-400 rounded-r"></span>
+                        {location.pathname === '/admin/dashboard' && (
+                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
                         <HomeIcon className="w-5 h-5" />
-                        <Link to="/dashboard">Home</Link>
+                        <Link to="/admin/dashboard">Home</Link>
                     </li>
 
-                    {/* New Campaigns */}
+                    {/* Driver Profiles */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-    ${location.pathname === '/campaigns' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+    ${location.pathname === '/admin/driverProfile' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === '/newCampaigns' && (
+                        {location.pathname === '/admin/driverProfile' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
-                        <SpeakerWaveIcon className="w-5 h-5" />
-                        <Link to="/newCampaigns">New Campaigns</Link>
+                        <UserIcon className="w-5 h-5" />
+                        <Link to="/admin/driverProfile">Driver Profiles</Link>
                     </li>
 
-                    {/* Asset Library */}
+                    {/* Artist Profile */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-    ${location.pathname === '/library' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+    ${location.pathname === '/admin/artistProfile' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === '/library' && (
+                        {location.pathname === '/admin/artistProfile' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
-                        <MusicalNoteIcon className="w-5 h-5" />
-                        <Link to="/AssetLibrary">Asset Library</Link>
+                        <UserGroupIcon className="w-5 h-5" />
+                        <Link to="/admin/artistProfile">Artist Profiles</Link>
                     </li>
 
-                    {/* Analytics */}
+                    {/* QR Code */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-    ${location.pathname === '/analytics' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+    ${location.pathname === '/admin/noQR' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === '/analytics' && (
+                        {location.pathname === '/admin/noQR' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
-                        <ChartBarSquareIcon className="w-5 h-5" />
-                        <Link to="/analytics">Analytics</Link>
+                        <QrCodeIcon className="w-5 h-5" />
+                        <Link to="/admin/noQR">QR Codes</Link>
                     </li>
 
-                    {/* Settings */}
+                    {/* Music Rates */}
                     <li
                         className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-    ${location.pathname === '/settings' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
+    ${location.pathname === '/admin/musicRates' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
                     >
-                        {location.pathname === '/settings' && (
+                        {location.pathname === '/admin/musicRates' && (
                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
                         )}
-                        <Cog6ToothIcon className="w-5 h-5" />
-                        <Link to="/settings">Settings</Link>
-                    </li>
-
-                    {/* FAQs */}
-                    <li
-                        className={`relative flex items-center gap-3 px-4 py-2 rounded-r-full transition-all duration-300 cursor-pointer
-    ${location.pathname === '/faqs' ? 'bg-[#1F1F21] text-white' : 'hover:bg-[#1F1F21]/50'}`}
-                    >
-                        {location.pathname === '/faqs' && (
-                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-teal-400 rounded-r"></span>
-                        )}
-                        <QuestionMarkCircleIcon className="w-5 h-5" />
-                        <Link to="/faqs">FAQs</Link>
+                        <CurrencyDollarIcon className="w-5 h-5" />
+                        <Link to="/admin/musicRates">Music Rates</Link>
                     </li>
                 </ul>
             </aside>
@@ -167,7 +154,7 @@ const QRGenerator = () => {
                     {/* Top Row */}
                     <div className="flex items-center justify-between">
                         {/* Left: Dashboard title */}
-                        <h1 className="text-2xl font-semibold text-white">Campaigns</h1>
+                        <h1 className="text-2xl font-semibold text-white">QR Code Generator</h1>
 
                         {/* Right: Bell + Profile */}
                         <div className="flex items-center gap-5">
@@ -185,24 +172,48 @@ const QRGenerator = () => {
 
                     {/* Empty state content for laptop */}
                     <div className="md:block flex mt-12 lg:mt-16 xl:mt-14 2xl:mt-20 flex-col items-center justify-center h-[calc(100vh-80px)] text-center px-6">
-                        <img
-                            src="/Illustration/NoCampaign.svg"
-                            alt="Campaign Illustration"
-                            className="h-96 w-96 xl:h-[26rem] xl:w-[26rem] 2xl:h-[30rem] 2xl:w-[30rem] mx-auto mt-6"
-                        />
-                        <p className="text-base text-white mb-6">
-                            You don’t have any campaigns right now
-                        </p>
+                        {/* QR Code Generator for Laptop */}
+                        <div className="flex flex-col items-center text-center px-6 mt-32 2xl:mt-48">
+                            {/* QR Logo */}
+                            <img
+                                src="/assets/qrSkeleton.svg"
+                                alt="QR Icon"
+                                className="w-40 h-40 mb-6"
+                            />
 
-                        <button
-                            className="
-            bg-gradient-to-r from-pink-500 to-teal-400
-            text-white font-semibold text-sm
-            px-6 py-3 rounded-full shadow-md transition-all
-            hover:brightness-110"
-                        >
-                            <Link to="/createCampaigns">+ Create new campaign</Link>
-                        </button>
+                            {/* Instruction Text */}
+                            <p className="text-white text-sm mb-6">
+                                Enter the link and click generate to get QR code
+                            </p>
+
+                            {/* Input Field */}
+                            <div className="w-full lg:w-96 mb-6 relative rounded-lg p-[1px] bg-gradient-to-r from-pink-500 to-teal-400">
+                                <input
+                                    type="text"
+                                    placeholder="Enter the link"
+                                    className="
+      w-full py-3 px-4
+      rounded-lg
+      bg-[#1F1F21] text-white
+      placeholder-gray-400
+      focus:outline-none focus:ring-2 focus:ring-pink-500
+    "
+                                />
+                            </div>
+
+
+                            {/* Generate Button */}
+                            <button
+                                className="
+      w-full lg:w-96 py-3
+      bg-gradient-to-r from-pink-500 to-teal-400
+      text-white text-base font-semibold rounded-lg
+      shadow-md hover:brightness-110 transition
+    "
+                            >
+                                Generate QR
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
