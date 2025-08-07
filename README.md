@@ -6,7 +6,7 @@ TuneFly is a music marketing platform where artists can launch promotional campa
 
 ## Project Walkthrough (Loom Video)
 
-[Watch the full video walkthrough on Loom] [https://www.loom.com/share/YOUR_VIDEO_LINK](https://www.loom.com/share/417261e089784eabb01c3ede24b9bcb3?sid=2603f20a-7bc3-47fe-b3b5-bced676ea1c7)
+Watch the full video walkthrough on Loom https://www.loom.com/share/417261e089784eabb01c3ede24b9bcb3?sid=2603f20a-7bc3-47fe-b3b5-bced676ea1c7
 
 ---
 
